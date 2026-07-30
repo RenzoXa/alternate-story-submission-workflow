@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import * as yaml from 'js-yaml';
 import { downloadImages } from './download-images.js';
 import process from 'node:process';
-import { exec } from 'node:child_process';
+import { execSync } from "node:child_process";
 
 const raw = JSON.parse(
   fs.readFileSync('.story-submission/parsed.json', 'utf8'),
@@ -123,19 +123,22 @@ const storyDir = `src/user-story/${slug}`;
 
 function existsOnBaseBranch(path) {
   try {
-    execSync(`git cat-file -e origin/main:${path}`, {
-      stdio: 'ignore',
-    });
+    execSync(
+      `git show origin/main:${path}`,
+      { stdio: "ignore" }
+    );
     return true;
   } catch {
     return false;
   }
 }
 
-if (existsOnBaseBranch(`${storyDir}/index.yaml`)) {
+const storyFile = `${storyDir}/index.yaml`;
+
+if (existsOnBaseBranch(storyFile)) {
   console.error(
     `A published story already exists at ${storyDir}. ` +
-      `Please choose a different title.`,
+    `If this is a genuinely new submission, its title collides with an existing story slug.`
   );
   process.exit(1);
 }
