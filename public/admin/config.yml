@@ -4,6 +4,7 @@ backend:
   branch: main
   open_authoring: true
   squash_merges: true
+  use_graphql: true
 
 publish_mode: editorial_workflow
 
@@ -86,10 +87,20 @@ collections:
 
         fields:
 
+          - label: Title
+            name: title
+            widget: string
+            required: false
+
           - label: Organization
             name: organization
             widget: string
             required: true
+
+          - label: Company Website
+            name: company_website
+            widget: string
+            required: false
 
           - label: Industries
             name: industries
@@ -202,19 +213,22 @@ collections:
             widget: string
             required: false
 
-          - label: Latitude
-            name: latitude
-            widget: number
-            value_type: float
+          - label: Industries
+            name: industries
+            widget: list
             required: false
-            step: 0.000001
+            allow_add: true
+            field:
+              label: Industry
+              name: industry
+              widget: string
 
-          - label: Longitude
-            name: longitude
-            widget: number
-            value_type: float
+          - label: GeoJSON
+            name: geojson
+            widget: map
+            type: Point
+            decimals: 7
             required: false
-            step: 0.000001
 
       # ==================================================
       # STORY BODY
@@ -243,3 +257,4 @@ collections:
               label: Paragraph
               name: paragraph
               widget: markdown
+              
