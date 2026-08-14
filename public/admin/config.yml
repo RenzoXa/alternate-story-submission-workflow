@@ -23,7 +23,6 @@ collections:
 
     extension: yaml
     format: yaml
-    frontmatter_delimiter: ""
     create: true
 
     # Store images relative to each story.
